@@ -1,0 +1,47 @@
+{
+  "sitePrefix": "| Rodrigo Rocha",
+  "name": "Rodrigo Rocha",
+  "email": "rodrigorochaua@gmail.com",
+  "description": "A fullstack web developer based in Portugal, passionate about motion and design, committed to crafting high performance, stunning user experiences.",
+  "url": "https://rodrigorocha.pt",
+  "technologies": [
+    "HTML",
+    "CSS",
+    "SCSS",
+    "Javascript",
+    "Typescript",
+    "React",
+    "Next.js",
+    "Gatsby.js",
+    "GSAP",
+    "Framer Motion",
+    "Shopify Themes (Liquid)",
+    "Shopify Apps",
+    "Three.js",
+    "React Three Fiber",
+    "OpenGL Shading Language",
+    "Node.js",
+    "NPM Packages",
+    "SEO"
+  ],
+  "socialMedia": {
+    "github": {
+      "url": "https://github.com/rodrigo-rocha",
+      "handle": "rodrigorocha"
+    },
+    "linkedin": {
+      "url": "https://www.linkedin.com/in/rodrigorocha101",
+      "handle": "rodrigorocha101"
+    },
+    "twitter": {
+      "url": "x.com/rochananet",
+      "handle": "@rochananet"
+    }
+  },
+  "metadata": {
+    "pictures": {
+      "profile": "https://rodrigorocha.pt/profile.jpg",
+      "og": "https://rodrigorocha.pt/og/OG_Light.png"
+    }
+  }
+}
