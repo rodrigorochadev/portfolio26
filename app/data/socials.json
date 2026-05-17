@@ -1,17 +1,22 @@
 [
   {
-    "label": "Instagram",
-    "social": "instagram",
-    "href": "https://www.instagram.com/__rodrigorocha__/"
-  },
-  {
     "label": "linkedin",
     "social": "linkedin",
     "href": "https://www.linkedin.com/in/rodrigorocha101/"
   },
   {
+    "label": "Github",
+    "social": "github",
+    "href": "https://github.com/rodrigo-rocha"
+  },
+  {
     "label": "x",
     "social": "x",
     "href": "https://x.com/rochananet"
+  },
+  {
+    "label": "Instagram",
+    "social": "instagram",
+    "href": "https://www.instagram.com/__rodrigorocha__/"
   }
 ]

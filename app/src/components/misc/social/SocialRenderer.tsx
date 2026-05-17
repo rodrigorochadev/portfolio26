@@ -1,6 +1,7 @@
 import React from "react";
 
 import dynamic from "next/dynamic";
+import GithubSvg from "@/app/src/icons/social/Github";
 
 const InstagramSvg = dynamic(() => import("../../../icons/social/Instagram"));
 const LinkedInSvg = dynamic(() => import("../../../icons/social/LinkedIn"));
@@ -10,6 +11,7 @@ export enum Social {
   X = "x",
   INSTAGRAM = "instagram",
   LINKEDIN = "linkedin",
+  GITHUB = "github",
 }
 
 interface SocialRendererProps {
@@ -26,5 +28,9 @@ export default function SocialRenderer(props: SocialRendererProps) {
       return <InstagramSvg />;
     case Social.LINKEDIN:
       return <LinkedInSvg />;
+    case Social.GITHUB:
+      return <GithubSvg />;
+    default:
+      return null;
   }
 }

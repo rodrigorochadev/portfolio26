@@ -4,7 +4,7 @@ import CommingSoon from "../misc/commingSoon/CommingSoon";
 
 export default function Hero() {
   return (
-    <div className="h-screen w-full flex flex-col justify-end md:flex-row md:items-end md:justify-between p-3 gap-2">
+    <div className="container h-screen w-full flex flex-col justify-end md:flex-row md:items-end md:justify-between pb-3 gap-2">
       <div className="flex items-end justify-between">
         <div>
           <p

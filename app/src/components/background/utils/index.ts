@@ -6,7 +6,7 @@ export const BACKGROUND_PROPS = {
   colorBalance: -0.15,
   warpStrength: 0.45,
   warpFrequency: 7.2,
-  warpSpeed: 2,
+  warpSpeed: 2.5,
   warpAmplitude: 61,
   blendAngle: 24,
   blendSoftness: 0.05,

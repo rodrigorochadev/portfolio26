@@ -45,3 +45,7 @@ body {
   font-size: clamp(5rem, 5vw, 6rem);
   font-variation-settings: "wght" 100;
 }
+
+.text-hover {
+  @apply transition-colors duration-200 hover:text-accent ease-out;
+}

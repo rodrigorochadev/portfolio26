@@ -5,11 +5,13 @@ import SocialRenderer, { Social } from "../../misc/social/SocialRenderer";
 
 export default function Header() {
   return (
-    <div className="fixed top-0 left-0 container w-full">
+    <div className="fixed top-0 left-0 container w-full z-60 mt-px">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between w-full py-2 md:py-0">
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-2 text-xs">
-            <span className="font-bold uppercase">{data.header?.title}</span>
+            <Link href="/" className="font-bold uppercase text-hover">
+              {data.header?.title}
+            </Link>
             <span className="font-light text-text-light lowercase">
               <span>{data.header?.subtitle}</span>
               <span> @ </span>
@@ -17,7 +19,7 @@ export default function Header() {
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-all duration-200 hover:text-[#2a4cf9]"
+                className="text-hover hover:text-[#2a4cf9]!"
                 href={data.header?.workAt?.href}
               >
                 {data.header?.workAt?.label}
@@ -32,7 +34,7 @@ export default function Header() {
                 key={`social-btn-${social.social}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-all duration-200 hover:text-accent"
+                className="text-hover rounded-full p-1"
                 href={social.href}
                 aria-label={`Link to ${social.label}`}
               >
