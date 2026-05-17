@@ -1,18 +1,19 @@
 "use client";
 
-import InfoSvg from "@/app/src/icons/warning/Info";
+import { cn } from "@/app/src/utils";
 import { Drawer } from "vaul";
 
 export default function CommingSoon() {
   return (
     <Drawer.Root direction="right">
-      <Drawer.Trigger className="bg-white px-2 py-px rounded-2xl cursor-pointer flex items-center gap-2 text-black relative text-hover hover:bg-accent hover:text-black!">
+      {/* <Drawer.Trigger className="bg-white px-2 py-1 rounded-2xl cursor-pointer flex items-center gap-2 text-black relative text-hover hover:bg-accent hover:text-white!"> */}
+      <Drawer.Trigger className={cn("flex items-center gap-2")}>
         <span className="relative flex size-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-600/50 opacity-75" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-700 opacity-75" />
           <span className="relative inline-flex size-2 rounded-full bg-red-600" />
         </span>
         <p className="text-xs font-bold uppercase">Comming Soon</p>
-        <InfoSvg />
+        {/* <InfoSvg /> */}
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
