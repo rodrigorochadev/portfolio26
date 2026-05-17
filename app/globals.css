@@ -2,13 +2,13 @@
 
 :root {
   --background: #ffffff;
-  --text: #171717;
+  --text: #000000;
   --text-light: #545454;
   --accent: #194e46;
 }
 
 [data-theme="dark"] {
-  --background: #171717;
+  --background: #000000;
   --text: #ffffff;
   --text-light: #e2e2e2;
   --accent: #194e46;

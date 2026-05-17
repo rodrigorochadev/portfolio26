@@ -7,10 +7,10 @@ const Background = dynamic(() => import("../background/Background"));
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-dvh flex flex-col justify-between">
+      <Background {...BACKGROUND_PROPS} />
       <div>
         <Header />
-        <Background {...BACKGROUND_PROPS} />
         {children}
       </div>
       {/* <></> FOOTER */}

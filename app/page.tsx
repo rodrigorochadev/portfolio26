@@ -3,7 +3,6 @@ import { Metadata } from "next";
 
 import { homeMetadata } from "@/app/src/lib/seo/metadata/homepageMetadata";
 import { homepageWebsiteLd } from "@/app/src/lib/seo/ldjson/webpage/homepage";
-import CommingSoon from "./src/components/misc/commingSoon/CommingSoon";
 
 export const metadata: Metadata = homeMetadata;
 
