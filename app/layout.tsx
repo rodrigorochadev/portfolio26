@@ -1,11 +1,10 @@
-import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans as MainFont } from "next/font/google";
 import { PropsWithChildren } from "react";
 
 import localFont from "next/font/local";
-import { homeMetadata } from "./src/lib/seo/metadata/homepageMetadata";
-import { personLd } from "./src/lib/seo/ldjson/personLd";
-import { websiteLd } from "./src/lib/seo/ldjson/website";
+import { rootMetadata, rootViewport } from "./src/lib/seo/metadata/rootMetadata";
+import { siteGraph } from "./src/lib/seo/ldjson/graph";
+import JsonLd from "./src/lib/seo/ldjson/JsonLd";
 import Layout from "./src/components/layout/Layout";
 
 import "./globals.css";
@@ -21,13 +20,9 @@ const mainSans = MainFont({
   subsets: ["latin"],
 });
 
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  themeColor: "#ffffff",
-};
+export const viewport = rootViewport;
 
-export const metadata: Metadata = homeMetadata;
+export const metadata = rootMetadata;
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
@@ -39,14 +34,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className="min-h-full flex flex-col">
         <ReactLenis root />
         <Layout>{children}</Layout>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
-        />
+        <JsonLd data={siteGraph} />
       </body>
     </html>
   );

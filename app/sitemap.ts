@@ -1,18 +1,7 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { absoluteUrl } from "./src/lib/seo/site";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const defaultPages = [
-    {
-      url: "https://rodrigorocha.pt",
-      lastModified: new Date(),
-      changeFrequency: "yearly" as "yearly",
-      priority: 1,
-    },
-
-    // other pages
-  ];
-
-  const sitemap = [...defaultPages];
-
-  return sitemap;
+// Google ignores changefreq/priority; an accurate lastmod is what matters.
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [{ url: absoluteUrl("/"), lastModified: new Date() }];
 }
