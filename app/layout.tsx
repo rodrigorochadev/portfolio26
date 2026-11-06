@@ -9,6 +9,7 @@ import { websiteLd } from "./src/lib/seo/ldjson/website";
 import Layout from "./src/components/layout/Layout";
 
 import "./globals.css";
+import ReactLenis from "lenis/react";
 
 const headingSans = localFont({
   variable: "--font-heading-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       className={`${mainSans.variable} ${headingSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ReactLenis root />
         <Layout>{children}</Layout>
         <script
           type="application/ld+json"
