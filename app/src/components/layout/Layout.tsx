@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import Header from "../navigation/header/Header";
 import dynamic from "next/dynamic";
-import { BACKGROUND_PROPS } from "../background/utils";
+import { BACKGROUND_PROPS } from "../../lib/constants/background";
 
 const Background = dynamic(() => import("../background/Background"));
 

@@ -1,3 +1,5 @@
+import type { GrainientSettings } from "@/app/src/components/background/types";
+
 export const BACKGROUND_PROPS = {
   color1: "#000000",
   color2: "#194e46",
@@ -21,4 +23,8 @@ export const BACKGROUND_PROPS = {
   centerX: 0.33,
   centerY: 0.49,
   zoom: 1.1,
-};
+  hoverColor: "#2fd3b0",
+  hoverRadius: 0.22,
+  hoverIntensity: 0.45,
+  hoverWarp: 0.18,
+} satisfies Partial<GrainientSettings>;
