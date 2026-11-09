@@ -8,7 +8,7 @@ import JsonLd from "./src/lib/seo/ldjson/JsonLd";
 import Layout from "./src/components/layout/Layout";
 
 import "./globals.css";
-import ReactLenis from "lenis/react";
+import SmoothScroll from "./src/components/misc/smoothScroll/SmoothScroll";
 
 const headingSans = localFont({
   variable: "--font-heading-sans",
@@ -32,7 +32,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       className={`${mainSans.variable} ${headingSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ReactLenis root />
+        <SmoothScroll />
         <Layout>{children}</Layout>
         <JsonLd data={siteGraph} />
       </body>

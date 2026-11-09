@@ -1,0 +1,73 @@
+{
+  "title": "Selected work",
+  "projects": [
+    {
+      "slug": "aurora-commerce",
+      "title": "Aurora Commerce",
+      "year": 2026,
+      "role": "Lead Frontend Engineer",
+      "tags": [
+        "Next.js",
+        "Shopify",
+        "Motion"
+      ],
+      "description": "A headless storefront with fluid page transitions and a sub-second checkout flow.",
+      "content": "Aurora is a headless commerce experience built for a fashion label that wanted the feel of an editorial magazine without sacrificing conversion. The storefront is statically rendered with on-demand revalidation, product imagery is streamed progressively, and every navigation is choreographed with shared-element transitions. The result was a 38% lift in mobile conversion and a Lighthouse performance score that never dips below 98.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe",
+        "alt": "Abstract fluid gradient in warm and cool tones"
+      }
+    },
+    {
+      "slug": "pulse-analytics",
+      "title": "Pulse Analytics",
+      "year": 2025,
+      "role": "Software Engineer",
+      "tags": [
+        "React",
+        "WebGL",
+        "D3"
+      ],
+      "description": "A real-time analytics dashboard rendering millions of data points at 60fps.",
+      "content": "Pulse is an internal analytics tool for a logistics company tracking fleets across Europe. Traditional SVG charts collapsed under the data volume, so the rendering layer was rewritten on top of WebGL with a custom instanced point renderer. Filters, brushing and zooming all happen on the GPU, keeping interactions smooth even on mid-range laptops.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+        "alt": "Analytics dashboard with charts on a laptop screen"
+      }
+    },
+    {
+      "slug": "lumen-studio",
+      "title": "Lumen Studio",
+      "year": 2025,
+      "role": "Creative Developer",
+      "tags": [
+        "Three.js",
+        "GLSL",
+        "Astro"
+      ],
+      "description": "An immersive portfolio for an architecture studio, driven by custom shaders.",
+      "content": "Lumen Studio needed a site that felt like walking through one of their buildings. Each project is presented as a light study: a custom GLSL shader reacts to scroll position and pointer movement, casting soft shadows across typography. Despite the visual ambition, the site ships under 150kb of JavaScript on first load.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1557672172-298e090bd0f1",
+        "alt": "Colorful abstract light painting"
+      }
+    },
+    {
+      "slug": "terminal-notes",
+      "title": "Terminal Notes",
+      "year": 2024,
+      "role": "Solo Developer",
+      "tags": [
+        "TypeScript",
+        "Electron",
+        "SQLite"
+      ],
+      "description": "A keyboard-first note taking app for developers, with local-first sync.",
+      "content": "Terminal Notes started as a weekend project and grew into a tool used by a few thousand developers. Notes are stored locally in SQLite and synced through a CRDT layer, so it works offline and merges conflicts automatically. Every action is reachable from the keyboard through a fuzzy command palette.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+        "alt": "Code displayed on a dark monitor"
+      }
+    }
+  ]
+}

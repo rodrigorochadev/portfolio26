@@ -1,0 +1,50 @@
+"use client";
+
+import { MouseEvent } from "react";
+import { useRouter } from "next/navigation";
+import { TIMING, toRect, useProjectTransition } from "./projectTransition";
+
+/** Topmost image that has actually loaded (the hero over its placeholder, when it's ready). */
+function visibleImage(container: HTMLElement) {
+  const images = Array.from(container.querySelectorAll("img"));
+  return images.reverse().find((img) => img.complete && img.naturalWidth > 0);
+}
+
+function isPlainClick(event: MouseEvent) {
+  return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+}
+
+/**
+ * Click handler for links that fly a project image to the next page. Falls back to a normal
+ * navigation for modified clicks, reduced motion, or when there's nothing to fly.
+ */
+export function useStartProjectTransition(slug: string, href: string) {
+  const router = useRouter();
+
+  return (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.defaultPrevented || !isPlainClick(event)) return;
+
+    const { flight, begin } = useProjectTransition.getState();
+    const source = document.querySelector<HTMLElement>(`[data-project-image="${slug}"]`);
+    const image = source && visibleImage(source);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Let <Link> navigate normally.
+    if (!source || !image || reduceMotion) return;
+
+    event.preventDefault();
+    if (flight) return;
+
+    const box = source.getBoundingClientRect();
+    begin({
+      slug,
+      src: image.currentSrc || image.src,
+      from: toRect(box),
+      radius: getComputedStyle(source).borderRadius,
+      scale: image.getBoundingClientRect().width / box.width,
+    });
+
+    // The page fades out around the image first, then the image flies on the next page.
+    setTimeout(() => router.push(href), TIMING.leave * 1000);
+  };
+}

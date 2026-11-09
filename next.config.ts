@@ -7,6 +7,9 @@ const rawShader = {
 };
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
+  },
   turbopack: {
     rules: {
       "*.vert": rawShader,
