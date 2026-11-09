@@ -15,6 +15,18 @@ export const TIMING = {
 /** easeInOutQuint: a soft start, a long glide, and a gentle settle. */
 export const FLY_EASE = [0.83, 0, 0.17, 1] as const;
 
+/** The "liquify" ripple on the flying image. Keep it subtle: it should read as fluid, not warped. */
+export const LIQUIFY = {
+  /** Peak displacement, in CSS px. */
+  strength: 52,
+  /** Noise frequency [x, y]; lower means broader, slower-looking waves. */
+  frequency: [0.005, 0.008] as const,
+  /** How much the noise reshapes over time (fraction of the frequency), so the ripple keeps flowing. */
+  flow: 0.2,
+  /** How far into the expansion the ripple has fully settled (must be < 1). */
+  settle: 0.8,
+};
+
 type Flight = {
   /** Distinguishes flights, so a page only treats itself as the destination of the one it mounted during. */
   id: number;
@@ -45,19 +57,26 @@ let lastFlightId = 0;
  * One project image flying between pages. The overlay renders it on top; the destination image
  * stays hidden until the copy has landed exactly over it, then the copy is removed.
  */
-export const useProjectTransition = create<ProjectTransitionState>((set, get) => ({
-  flight: null,
-  begin: (flight) => set({ flight: { ...flight, id: ++lastFlightId, to: null, landed: false } }),
-  land: (slug, to) => {
-    const { flight } = get();
-    if (flight && flight.slug === slug && !flight.to) set({ flight: { ...flight, to } });
-  },
-  arrive: () => {
-    const { flight } = get();
-    if (flight?.to && !flight.landed) set({ flight: { ...flight, landed: true } });
-  },
-  finish: () => set({ flight: null }),
-}));
+export const useProjectTransition = create<ProjectTransitionState>(
+  (set, get) => ({
+    flight: null,
+    begin: (flight) =>
+      set({
+        flight: { ...flight, id: ++lastFlightId, to: null, landed: false },
+      }),
+    land: (slug, to) => {
+      const { flight } = get();
+      if (flight && flight.slug === slug && !flight.to)
+        set({ flight: { ...flight, to } });
+    },
+    arrive: () => {
+      const { flight } = get();
+      if (flight?.to && !flight.landed)
+        set({ flight: { ...flight, landed: true } });
+    },
+    finish: () => set({ flight: null }),
+  }),
+);
 
 /** Id of the flight in progress, if any; read once at mount to know if this is its destination. */
 export function currentFlightId(slug?: string) {

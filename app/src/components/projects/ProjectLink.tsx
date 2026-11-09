@@ -5,7 +5,8 @@ import Link from "next/link";
 import { getImageProps } from "next/image";
 import { Project, PROJECT_HERO_IMAGE_SIZES, projectPath } from "../../lib/projects";
 import { markOpenedFromGrid } from "./openedFromGrid";
-import { useStartProjectTransition } from "./transition/useStartProjectTransition";
+import { isPlainClick, useStartProjectTransition } from "./transition/useStartProjectTransition";
+import { useBackgroundTheme } from "../background/backgroundTheme";
 
 type ProjectLinkProps = Omit<ComponentProps<typeof Link>, "href"> & {
   project: Project;
@@ -47,7 +48,10 @@ export default function ProjectLink({ project, onClick, ...props }: ProjectLinkP
       onTouchStart={preloadHero}
       onClick={(event) => {
         onClick?.(event);
+        if (event.defaultPrevented || !isPlainClick(event)) return;
         markOpenedFromGrid(project.slug);
+        // Start recoloring now so the background shifts while the image flies.
+        useBackgroundTheme.getState().setTheme(project.background);
         startTransition(event);
       }}
     />

@@ -10,7 +10,8 @@ function visibleImage(container: HTMLElement) {
   return images.reverse().find((img) => img.complete && img.naturalWidth > 0);
 }
 
-function isPlainClick(event: MouseEvent) {
+/** A click that navigates in place (not a new tab/window), i.e. one we may animate. */
+export function isPlainClick(event: MouseEvent) {
   return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
 }
 

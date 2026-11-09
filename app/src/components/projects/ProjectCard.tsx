@@ -10,8 +10,8 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project, priority }: ProjectCardProps) {
   return (
-    <article id={project.slug} className="flex flex-col gap-3 scroll-mt-16">
-      <ProjectLink project={project} aria-label={`View ${project.title}`} className="group block">
+    <article id={project.slug} className="project-card flex flex-col gap-3 scroll-mt-16">
+      <ProjectLink project={project} aria-label={`View ${project.title}`} className="block">
         <ProjectImageTarget slug={project.slug} className="aspect-4/3">
           <Image
             src={project.image.src}
@@ -19,7 +19,7 @@ export default function ProjectCard({ project, priority }: ProjectCardProps) {
             fill
             priority={priority}
             sizes={PROJECT_CARD_IMAGE_SIZES}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className="project-card-image object-cover"
           />
         </ProjectImageTarget>
       </ProjectLink>

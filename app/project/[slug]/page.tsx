@@ -9,6 +9,7 @@ import {
 import { createPageMetadata } from "@/app/src/lib/seo/metadata/createPageMetadata";
 import PageFade from "@/app/src/components/projects/transition/PageFade";
 import ProjectBackLink from "@/app/src/components/projects/ProjectBackLink";
+import ProjectBackground from "@/app/src/components/projects/ProjectBackground";
 import ProjectHeroImage from "@/app/src/components/projects/ProjectHeroImage";
 
 // Only slugs listed in projects.json exist; anything else 404s.
@@ -39,6 +40,7 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
 
   return (
     <PageFade>
+      <ProjectBackground theme={project.background} />
       <main className="container w-full pt-16 pb-16 flex flex-col gap-8">
         <ProjectBackLink
           slug={slug}

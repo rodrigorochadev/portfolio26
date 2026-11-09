@@ -3,6 +3,7 @@ import vertex from "../shaders/grainient.vert";
 import fragment from "../shaders/grainient.frag";
 import { MAX_DPR } from "../settings";
 import type { GrainientSettings } from "../types";
+import type { Rgb } from "@/app/src/utils/color";
 import { applySettings, createUniforms } from "./uniforms";
 
 /** Per-frame values driven by the animation loop. */
@@ -16,6 +17,9 @@ export type FrameState = {
   mouseY: number;
   /** Hover effect strength, 0 → 1. */
   mouseStrength: number;
+  /** Eased colors; they override the settings' color2 / hoverColor while easing toward them. */
+  color2: Rgb | null;
+  hoverColor: Rgb | null;
 };
 
 /**
@@ -77,6 +81,8 @@ export const createGrainientRenderer = (container: HTMLElement) => {
     if (frame.mouseStrength !== undefined) {
       uniforms.uMouseStrength.value = frame.mouseStrength;
     }
+    if (frame.color2) uniforms.uColor2.value.set(frame.color2);
+    if (frame.hoverColor) uniforms.uHoverColor.value.set(frame.hoverColor);
   };
 
   return { element: container, setSettings, setFrame, render, dispose };

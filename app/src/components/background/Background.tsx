@@ -2,6 +2,7 @@
 import { cn } from "@/app/src/utils";
 import { useGrainient } from "./hooks/useGrainient";
 import { resolveSettings } from "./settings";
+import { useBackgroundTheme } from "./backgroundTheme";
 import type { BackgroundProps } from "./types";
 
 /**
@@ -9,7 +10,13 @@ import type { BackgroundProps } from "./types";
  * the page. Fades in once the first frame is ready and reacts to the pointer.
  */
 export default function Background({ className, ...props }: BackgroundProps) {
-  const { ref, ready } = useGrainient(resolveSettings(props));
+  const theme = useBackgroundTheme((s) => s.theme);
+  const { ref, ready } = useGrainient(
+    resolveSettings({
+      ...props,
+      ...(theme && { color2: theme.blob, hoverColor: theme.hover }),
+    }),
+  );
 
   return (
     <div

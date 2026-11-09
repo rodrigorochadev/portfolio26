@@ -16,6 +16,10 @@
       "image": {
         "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe",
         "alt": "Abstract fluid gradient in warm and cool tones"
+      },
+      "background": {
+        "blob": "#3b1f6e",
+        "hover": "#b48cff"
       }
     },
     {
@@ -33,6 +37,10 @@
       "image": {
         "src": "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
         "alt": "Analytics dashboard with charts on a laptop screen"
+      },
+      "background": {
+        "blob": "#1d3a7a",
+        "hover": "#5b9dff"
       }
     },
     {
@@ -50,6 +58,10 @@
       "image": {
         "src": "https://images.unsplash.com/photo-1557672172-298e090bd0f1",
         "alt": "Colorful abstract light painting"
+      },
+      "background": {
+        "blob": "#6b1d4f",
+        "hover": "#ff7ac8"
       }
     },
     {
@@ -67,6 +79,10 @@
       "image": {
         "src": "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
         "alt": "Code displayed on a dark monitor"
+      },
+      "background": {
+        "blob": "#5a3a0c",
+        "hover": "#f5b942"
       }
     }
   ]

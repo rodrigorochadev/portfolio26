@@ -2,7 +2,8 @@
 
 import { PropsWithChildren } from "react";
 import Link from "next/link";
-import { useStartProjectTransition } from "./transition/useStartProjectTransition";
+import { isPlainClick, useStartProjectTransition } from "./transition/useStartProjectTransition";
+import { useBackgroundTheme } from "../background/backgroundTheme";
 
 type ProjectBackLinkProps = PropsWithChildren<{
   slug: string;
@@ -16,7 +17,15 @@ export default function ProjectBackLink({ slug, className, children }: ProjectBa
   const startTransition = useStartProjectTransition(slug, href);
 
   return (
-    <Link href={href} onClick={startTransition} className={className}>
+    <Link
+      href={href}
+      onClick={(event) => {
+        // Fade back to the default colors while the image flies home.
+        if (isPlainClick(event)) useBackgroundTheme.getState().setTheme(null);
+        startTransition(event);
+      }}
+      className={className}
+    >
       {children}
     </Link>
   );

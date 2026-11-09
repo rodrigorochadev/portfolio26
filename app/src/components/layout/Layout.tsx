@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react";
 import Header from "../navigation/header/Header";
+import Footer from "../navigation/footer/Footer";
 import dynamic from "next/dynamic";
 import { BACKGROUND_PROPS } from "../../lib/constants/background";
 import ProjectTransitionOverlay from "../projects/transition/ProjectTransitionOverlay";
@@ -14,7 +15,7 @@ export default function Layout({ children }: PropsWithChildren) {
         <Header />
         {children}
       </div>
-      {/* <></> FOOTER */}
+      <Footer />
       <ProjectTransitionOverlay />
     </div>
   );

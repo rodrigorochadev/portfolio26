@@ -49,3 +49,15 @@ body {
 .text-hover {
   @apply transition-colors duration-200 hover:text-accent ease-out;
 }
+
+/* Project grid: hovering a card turns the other cards black & white. Only on devices that really hover,
+   so a tap on touch screens doesn't leave the rest stuck in grayscale. */
+.project-card-image {
+  transition: filter 500ms ease-out;
+}
+
+@media (hover: hover) {
+  .project-grid:has(.project-card:hover) .project-card:not(:hover) .project-card-image {
+    filter: grayscale(1);
+  }
+}
