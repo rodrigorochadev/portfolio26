@@ -45,6 +45,28 @@
           ]
         },
         {
+          "type": "palette",
+          "colors": [
+            {
+              "name": "Violet",
+              "hex": "#241339"
+            },
+            {
+              "name": "Lilac",
+              "hex": "#b48cff"
+            },
+            {
+              "name": "Mist",
+              "hex": "#ece4ff"
+            }
+          ],
+          "image": {
+            "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe",
+            "alt": "Abstract fluid gradient in warm and cool tones"
+          },
+          "caption": "Deep violet carries the campaigns; lilac is reserved for interactive states, mist for surfaces."
+        },
+        {
           "type": "gallery",
           "images": [
             {
@@ -156,6 +178,32 @@
           "src": "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3",
           "alt": "Aerial view of a container port with cranes and stacked containers",
           "aspect": "wide"
+        },
+        {
+          "type": "palette",
+          "colors": [
+            {
+              "name": "Navy",
+              "hex": "#0e1b3d"
+            },
+            {
+              "name": "Signal",
+              "hex": "#5b9dff"
+            },
+            {
+              "name": "Ice",
+              "hex": "#dce9ff"
+            },
+            {
+              "name": "Alert",
+              "hex": "#ff8a5b"
+            }
+          ],
+          "image": {
+            "src": "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+            "alt": "Analytics dashboard with charts on a laptop screen"
+          },
+          "caption": "A dark navy canvas keeps dense charts legible; one warm accent is kept for anomalies."
         },
         {
           "type": "text",
@@ -283,6 +331,28 @@
           ]
         },
         {
+          "type": "palette",
+          "colors": [
+            {
+              "name": "Plum",
+              "hex": "#3a0f2b"
+            },
+            {
+              "name": "Rose",
+              "hex": "#ff7ac8"
+            },
+            {
+              "name": "Blush",
+              "hex": "#ffe3f2"
+            }
+          ],
+          "image": {
+            "src": "https://images.unsplash.com/photo-1557672172-298e090bd0f1",
+            "alt": "Colorful abstract light painting"
+          },
+          "caption": "Plum and rose come straight from the studio's print identity."
+        },
+        {
           "type": "quote",
           "quote": "We don't design buildings, we design how light moves through them. The website finally shows that.",
           "author": "Tomás Valente",
@@ -375,6 +445,28 @@
             "I kept losing snippets, commands and half-finished thoughts across editors, chats and sticky notes. Existing apps were either built for writers, with lots of formatting and little speed, or synced through a server I didn't control.",
             "The goal was simple: open, type, close, all without touching the mouse, with everything stored locally and syncing between my machines when they're online."
           ]
+        },
+        {
+          "type": "palette",
+          "colors": [
+            {
+              "name": "Ink",
+              "hex": "#1c1408"
+            },
+            {
+              "name": "Amber",
+              "hex": "#f5b942"
+            },
+            {
+              "name": "Paper",
+              "hex": "#f7ecd6"
+            }
+          ],
+          "image": {
+            "src": "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
+            "alt": "Code displayed on a dark monitor"
+          },
+          "caption": "Amber-on-ink nods to old phosphor terminals; the light theme swaps ink for paper."
         },
         {
           "type": "image",
@@ -506,6 +598,32 @@
           "caption": "Everything started on paper: an audit of 140 screens grouped into the patterns they actually shared."
         },
         {
+          "type": "palette",
+          "colors": [
+            {
+              "name": "Forest",
+              "hex": "#0b2e24"
+            },
+            {
+              "name": "Mint",
+              "hex": "#34d399"
+            },
+            {
+              "name": "Foam",
+              "hex": "#d6f5e8"
+            },
+            {
+              "name": "Graphite",
+              "hex": "#2b2f2e"
+            }
+          ],
+          "image": {
+            "src": "https://images.unsplash.com/photo-1558655146-9f40138edfeb",
+            "alt": "Stylus on a tablet next to a backlit keyboard in a dark room"
+          },
+          "caption": "Relay's core tokens: every component theme derives from these four."
+        },
+        {
           "type": "quote",
           "quote": "Relay turned design reviews from arguing about pixels into talking about the customer.",
           "author": "Marta Sousa",
@@ -598,6 +716,28 @@
             "Hosted platforms make deploying feel effortless, but their pricing grows with every side project, and a single VPS can run a dozen small apps for a fraction of the cost.",
             "The catch is everything a platform does for you: building images, swapping containers without downtime, certificates, rollbacks. Harbor does those parts and nothing else."
           ]
+        },
+        {
+          "type": "palette",
+          "colors": [
+            {
+              "name": "Oxblood",
+              "hex": "#2e0f17"
+            },
+            {
+              "name": "Coral",
+              "hex": "#ff6b8a"
+            },
+            {
+              "name": "Shell",
+              "hex": "#ffe1e7"
+            }
+          ],
+          "image": {
+            "src": "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
+            "alt": "Laptop partly open in the dark, its screen glowing in red and blue"
+          },
+          "caption": "Oxblood for the dashboard chrome, coral for deploy status and calls to action."
         },
         {
           "type": "image",

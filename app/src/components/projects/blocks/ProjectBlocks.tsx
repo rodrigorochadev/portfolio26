@@ -4,6 +4,7 @@ import GalleryBlock from "./GalleryBlock";
 import ImageBlock from "./ImageBlock";
 import ListBlock from "./ListBlock";
 import OverviewBlock from "./OverviewBlock";
+import PaletteBlock from "./PaletteBlock";
 import QuoteBlock from "./QuoteBlock";
 import StatsBlock from "./StatsBlock";
 import TextBlock from "./TextBlock";
@@ -35,6 +36,8 @@ function renderBlock(block: ProjectBlock, project: Project) {
       return <ListBlock {...block} />;
     case "code":
       return <CodeBlock {...block} />;
+    case "palette":
+      return <PaletteBlock {...block} />;
     case "quote":
       return <QuoteBlock {...block} />;
   }

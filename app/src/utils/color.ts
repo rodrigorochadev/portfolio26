@@ -17,3 +17,9 @@ export const hexToRgb = (hex: string): Rgb => {
     parseInt(h.slice(4, 6), 16) / 255,
   ];
 };
+
+/** Whether dark text reads better than light text on this color (WCAG relative luminance). */
+export const isLightColor = (hex: string): boolean => {
+  const [r, g, b] = hexToRgb(hex).map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.179;
+};

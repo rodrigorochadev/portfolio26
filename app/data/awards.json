@@ -1,0 +1,40 @@
+{
+  "title": "Awards & recognitions",
+  "awards": [
+    {
+      "title": "Site of the Day",
+      "issuer": "Awwwards",
+      "project": "aurora-commerce",
+      "year": 2026,
+      "href": "https://www.awwwards.com/"
+    },
+    {
+      "title": "Developer Award",
+      "issuer": "Awwwards",
+      "project": "aurora-commerce",
+      "year": 2026,
+      "href": "https://www.awwwards.com/"
+    },
+    {
+      "title": "Honorable Mention",
+      "issuer": "Awwwards",
+      "project": "lumen-studio",
+      "year": 2025,
+      "href": "https://www.awwwards.com/"
+    },
+    {
+      "title": "Website of the Day",
+      "issuer": "CSS Design Awards",
+      "project": "pulse-analytics",
+      "year": 2025,
+      "href": "https://www.cssdesignawards.com/"
+    },
+    {
+      "title": "Site of the Day",
+      "issuer": "FWA",
+      "project": "lumen-studio",
+      "year": 2025,
+      "href": "https://thefwa.com/"
+    }
+  ]
+}

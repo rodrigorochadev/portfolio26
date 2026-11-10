@@ -11,6 +11,7 @@ export type ProjectBlock =
   | { type: "stats"; label?: string; items: { value: string; label: string }[] }
   | { type: "list"; label?: string; heading: string; items: { title: string; body: string }[] }
   | { type: "code"; label?: string; filename: string; language: string; code: string; caption?: string }
+  | { type: "palette"; colors: { name: string; hex: string }[]; image?: BlockImage; caption?: string }
   | { type: "quote"; quote: string; author: string; role: string };
 
 export type Project = Omit<(typeof data.projects)[number], "blocks"> & { blocks: ProjectBlock[] };
