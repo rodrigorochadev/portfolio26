@@ -11,11 +11,6 @@ export function markOpenedFromGrid(slug: string, gridPath: string) {
   lastGridPath = gridPath;
 }
 
-/** True when the current project page was reached by clicking its card in this session. */
-export function wasOpenedFromGrid(slug: string) {
-  return lastOpenedSlug === slug;
-}
-
 /**
  * The grid page the project was opened from. Otherwise (direct visit, "next project" link) home if
  * the project is featured there, else /projects: Back always has a card to land on.

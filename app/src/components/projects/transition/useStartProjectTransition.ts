@@ -36,13 +36,14 @@ export function useStartProjectTransition(slug: string, href: string, { restoreS
     const image = source && visibleImage(source);
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Let <Link> navigate normally.
-    if (!source || !image || reduceMotion) return;
+    const box = source?.getBoundingClientRect();
+
+    // Let <Link> navigate normally (also when the source is hidden, e.g. a thumbnail on small screens).
+    if (!source || !box?.width || !image || reduceMotion) return;
 
     event.preventDefault();
     if (flight) return;
 
-    const box = source.getBoundingClientRect();
     begin({
       slug,
       src: image.currentSrc || image.src,

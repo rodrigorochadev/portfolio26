@@ -10,13 +10,15 @@ import { useBackgroundTheme } from "../background/backgroundTheme";
 
 type ProjectLinkProps = Omit<ComponentProps<typeof Link>, "href"> & {
   project: Project;
+  /** A grid card (home or /projects), so the project's Back link returns there. False for "Next project". */
+  fromGrid?: boolean;
 };
 
 /**
  * Link to a project that flies its card image to the project hero, and warms the browser cache with
  * the hero-sized image on intent (hover / focus / touch) so it's usually sharp by the time it lands.
  */
-export default function ProjectLink({ project, onClick, ...props }: ProjectLinkProps) {
+export default function ProjectLink({ project, fromGrid = true, onClick, ...props }: ProjectLinkProps) {
   const preloaded = useRef(false);
   const href = projectPath(project.slug);
   const startTransition = useStartProjectTransition(project.slug, href);
@@ -49,7 +51,7 @@ export default function ProjectLink({ project, onClick, ...props }: ProjectLinkP
       onClick={(event) => {
         onClick?.(event);
         if (event.defaultPrevented || !isPlainClick(event)) return;
-        markOpenedFromGrid(project.slug, window.location.pathname);
+        if (fromGrid) markOpenedFromGrid(project.slug, window.location.pathname);
         // Start recoloring now so the background shifts while the image flies.
         useBackgroundTheme.getState().setTheme(project.background);
         startTransition(event);

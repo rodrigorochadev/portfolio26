@@ -1,12 +1,17 @@
 import Image from "next/image";
-import { Project, projectPath } from "../../lib/projects";
-import PageTransitionLink from "./transition/PageTransitionLink";
+import { Project } from "../../lib/projects";
+import ProjectLink from "./ProjectLink";
+import ProjectImageTarget from "./transition/ProjectImageTarget";
 
-/** Closing link to the following project, so a visitor can keep reading without going back. */
+/**
+ * Closing link to the following project, so a visitor can keep reading without going back. Its
+ * thumbnail flies to the next project's hero, like a grid card.
+ */
 export default function NextProject({ project }: { project: Project }) {
   return (
-    <PageTransitionLink
-      href={projectPath(project.slug)}
+    <ProjectLink
+      project={project}
+      fromGrid={false}
       className="group grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 border-t border-text/10 pt-8"
     >
       <span className="text-xs font-bold uppercase text-text-light md:col-span-3">Next project</span>
@@ -17,7 +22,10 @@ export default function NextProject({ project }: { project: Project }) {
           </span>
           <span className="text-text-light max-w-lg">{project.description}</span>
         </div>
-        <div className="relative hidden sm:block aspect-4/3 w-40 md:w-56 shrink-0 overflow-hidden rounded-sm">
+        <ProjectImageTarget
+          slug={project.slug}
+          className="hidden sm:block aspect-4/3 w-40 md:w-56 shrink-0"
+        >
           <Image
             src={project.image.src}
             alt={project.image.alt}
@@ -25,8 +33,8 @@ export default function NextProject({ project }: { project: Project }) {
             sizes="224px"
             className="object-cover"
           />
-        </div>
+        </ProjectImageTarget>
       </div>
-    </PageTransitionLink>
+    </ProjectLink>
   );
 }
