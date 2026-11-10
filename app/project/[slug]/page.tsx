@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import {
+  getNextProject,
   getProjectBySlug,
   getProjects,
   projectPath,
@@ -10,9 +11,11 @@ import { createPageMetadata } from "@/app/src/lib/seo/metadata/createPageMetadat
 import PageFade from "@/app/src/components/projects/transition/PageFade";
 import ProjectBackLink from "@/app/src/components/projects/ProjectBackLink";
 import ProjectBackground from "@/app/src/components/projects/ProjectBackground";
+import ProjectBlocks from "@/app/src/components/projects/blocks/ProjectBlocks";
+import NextProject from "@/app/src/components/projects/NextProject";
 import ProjectHeroImage from "@/app/src/components/projects/ProjectHeroImage";
 
-// Only slugs listed in projects.json exist; anything else 404s.
+// Only slugs listed in projects.json exist; anything else 404s (restart `next dev` after adding one).
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -41,30 +44,29 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
   return (
     <PageFade>
       <ProjectBackground theme={project.background} />
-      <main className="container w-full pt-16 pb-16 flex flex-col gap-8">
-        <ProjectBackLink
-          slug={slug}
-          className="text-xs font-bold uppercase text-hover w-fit"
-        >
-          ← Back
-        </ProjectBackLink>
+      {/* Fixed to the viewport, so it's reachable from anywhere on a long case study. Inside PageFade
+          (opacity only, no transform), so it still fades with the page during transitions. */}
+      <ProjectBackLink
+        slug={slug}
+        className="fixed left-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 rounded-full border border-text/10 bg-background/60 px-4 py-2 text-xs font-bold uppercase backdrop-blur-md text-hover"
+      >
+        ← Back
+      </ProjectBackLink>
 
-        <header className="flex flex-col gap-4">
+      {/* Bottom padding keeps the last content clear of the fixed Back button. */}
+      <main className="container w-full pt-28 md:pt-40 pb-28 flex flex-col gap-8">
+        {/* Same position as when Back sat above it: its line (16px) + the gap (32px) added here. */}
+        <header className="flex flex-col gap-4 mt-24 md:mt-32">
           <h1 className="font-heading text-5xl md:text-7xl tracking-tight uppercase">
             {project.title}
           </h1>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs uppercase text-text-light">
-            <span>{project.year}</span>
-            <span>{project.role}</span>
-            <span>{project.tags.join(" / ")}</span>
-          </div>
         </header>
 
         <ProjectHeroImage project={project} />
 
-        <div className="flex flex-col gap-4 max-w-2xl">
-          <p className="text-lg">{project.description}</p>
-          <p className="text-text-light">{project.content}</p>
+        <div className="flex flex-col gap-20 md:gap-28 pt-12 md:pt-20">
+          <ProjectBlocks project={project} />
+          <NextProject project={getNextProject(slug)} />
         </div>
       </main>
     </PageFade>

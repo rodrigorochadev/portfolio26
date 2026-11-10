@@ -49,7 +49,7 @@ export default function ProjectLink({ project, onClick, ...props }: ProjectLinkP
       onClick={(event) => {
         onClick?.(event);
         if (event.defaultPrevented || !isPlainClick(event)) return;
-        markOpenedFromGrid(project.slug);
+        markOpenedFromGrid(project.slug, window.location.pathname);
         // Start recoloring now so the background shifts while the image flies.
         useBackgroundTheme.getState().setTheme(project.background);
         startTransition(event);

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import data from "@/app/data/header.json";
+import PageTransitionLink from "../../projects/transition/PageTransitionLink";
 
 export default function Header() {
   return (
@@ -7,9 +8,9 @@ export default function Header() {
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between w-full">
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-2 text-xs">
-            <Link href="/" className="font-bold uppercase text-hover">
+            <PageTransitionLink href="/" className="font-bold uppercase text-hover">
               {data.header?.title}
-            </Link>
+            </PageTransitionLink>
             <span className="font-light text-text-light lowercase">
               <span>{data.header?.subtitle}</span>
               <span> @ </span>

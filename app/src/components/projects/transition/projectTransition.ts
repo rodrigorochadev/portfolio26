@@ -5,7 +5,7 @@ export type Rect = { top: number; left: number; width: number; height: number };
 /** Timings in seconds. The destination page finishes fading in just before the image lands. */
 export const TIMING = {
   leave: 0.5,
-  fly: 1.4,
+  fly: 1.1,
   enter: 0.7,
   get enterDelay() {
     return this.fly - this.enter - 0.1;
@@ -49,9 +49,14 @@ type ProjectTransitionState = {
   land: (slug: string, to: Rect) => void;
   arrive: () => void;
   finish: () => void;
+  /** A plain page change (no image): the page fades out, then the next one fades in. */
+  navigation: { id: number } | null;
+  beginNavigation: () => void;
+  endNavigation: (id: number) => void;
 };
 
 let lastFlightId = 0;
+let lastNavigationId = 0;
 
 /**
  * One project image flying between pages. The overlay renders it on top; the destination image
@@ -75,6 +80,11 @@ export const useProjectTransition = create<ProjectTransitionState>(
         set({ flight: { ...flight, landed: true } });
     },
     finish: () => set({ flight: null }),
+    navigation: null,
+    beginNavigation: () => set({ navigation: { id: ++lastNavigationId } }),
+    endNavigation: (id) => {
+      if (get().navigation?.id === id) set({ navigation: null });
+    },
   }),
 );
 
@@ -83,6 +93,11 @@ export function currentFlightId(slug?: string) {
   const { flight } = useProjectTransition.getState();
   if (!flight || (slug && flight.slug !== slug)) return null;
   return flight.id;
+}
+
+/** Id of the page navigation in progress, if any; read once at mount like `currentFlightId`. */
+export function currentNavigationId() {
+  return useProjectTransition.getState().navigation?.id ?? null;
 }
 
 export function toRect({ top, left, width, height }: DOMRect): Rect {

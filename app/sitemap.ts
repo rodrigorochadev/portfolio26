@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { absoluteUrl } from "./src/lib/seo/site";
-import { getProjects, projectPath } from "./src/lib/projects";
+import { getProjects, projectPath, PROJECTS_PATH } from "./src/lib/projects";
 
 // Google ignores changefreq/priority; an accurate lastmod is what matters.
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: absoluteUrl("/"), lastModified },
+    { url: absoluteUrl(PROJECTS_PATH), lastModified },
     ...getProjects().map(({ slug }) => ({ url: absoluteUrl(projectPath(slug)), lastModified })),
   ];
 }

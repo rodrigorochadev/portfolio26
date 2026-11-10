@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useId, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { animate, motion, useMotionValue, useMotionValueEvent } from "motion/react";
 import { FLY_EASE, LIQUIFY, TIMING, useProjectTransition } from "./projectTransition";
 
-// If the destination never mounts (failed navigation, missing target), don't leave the copy stuck.
+// If the destination never mounts (failed navigation, missing target), don't leave the copy stuck:
+// give up shortly after the route changed without a target, or after a long wait regardless.
+const NO_TARGET_TIMEOUT = 300;
 const LANDING_TIMEOUT = 4000;
 
 // Click → fade out → most of the expansion. Ends before the landing, so the handoff is undistorted.
@@ -24,6 +27,8 @@ export default function ProjectTransitionOverlay() {
   const arrive = useProjectTransition((s) => s.arrive);
   const finish = useProjectTransition((s) => s.finish);
   const flightId = flight?.id ?? null;
+  const pathname = usePathname();
+  const startPath = useRef(pathname);
   const landed = flight?.landed ?? false;
 
   const filterId = `project-liquify-${useId().replace(/:/g, "")}`;
@@ -81,10 +86,17 @@ export default function ProjectTransitionOverlay() {
   }, [flightId, elapsed]);
 
   useEffect(() => {
+    if (flightId !== null) startPath.current = pathname;
+    // Only when a flight starts; the pathname is read as the flight's starting page.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flightId]);
+
+  useEffect(() => {
     if (!flight || flight.to) return;
-    const timeout = setTimeout(finish, LANDING_TIMEOUT);
+    const arrived = pathname !== startPath.current;
+    const timeout = setTimeout(finish, arrived ? NO_TARGET_TIMEOUT : LANDING_TIMEOUT);
     return () => clearTimeout(timeout);
-  }, [flight, finish]);
+  }, [flight, finish, pathname]);
 
   // The destination was revealed underneath the (identical) copy; give it a couple of frames to
   // paint its image before removing the copy, so the handoff can never show a blank frame.
