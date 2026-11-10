@@ -1,6 +1,7 @@
 import data from "@/app/data/projects.json";
 import { getProjects, Project, PROJECTS_PATH } from "../../lib/projects";
 import ProjectCard from "./ProjectCard";
+import ProjectGrid from "./ProjectGrid";
 import PageTransitionLink from "./transition/PageTransitionLink";
 
 type ProjectListProps = {
@@ -22,11 +23,11 @@ export default function ProjectList({
   return (
     <section className={`${className} flex flex-col gap-6`}>
       {title && <h2 className="text-xs font-bold uppercase">{title}</h2>}
-      <div className="project-grid grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-10">
+      <ProjectGrid>
         {projects.map((project) => (
           <ProjectCard key={`project-${project.slug}`} project={project} />
         ))}
-      </div>
+      </ProjectGrid>
       {seeAll && (
         <PageTransitionLink
           href={PROJECTS_PATH}
