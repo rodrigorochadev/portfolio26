@@ -12,6 +12,7 @@ export default function NextProject({ project }: { project: Project }) {
     <ProjectLink
       project={project}
       fromGrid={false}
+      data-next-project
       className="group grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 border-t border-text/10 pt-8"
     >
       <span className="text-xs font-bold uppercase text-text-light md:col-span-3">Next project</span>

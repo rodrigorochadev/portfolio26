@@ -13,6 +13,7 @@ import ProjectBackLink from "@/app/src/components/projects/ProjectBackLink";
 import ProjectBackground from "@/app/src/components/projects/ProjectBackground";
 import ProjectBlocks from "@/app/src/components/projects/blocks/ProjectBlocks";
 import NextProject from "@/app/src/components/projects/NextProject";
+import NextProjectPull from "@/app/src/components/projects/NextProjectPull";
 import ProjectHeroImage from "@/app/src/components/projects/ProjectHeroImage";
 
 // Only slugs listed in projects.json exist; anything else 404s (restart `next dev` after adding one).
@@ -40,6 +41,7 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
   const { slug } = await props.params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
+  const nextProject = getNextProject(slug);
 
   return (
     <PageFade>
@@ -66,9 +68,12 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
 
         <div className="flex flex-col gap-20 md:gap-28 pt-12 md:pt-20">
           <ProjectBlocks project={project} />
-          <NextProject project={getNextProject(slug)} />
+          <NextProject project={nextProject} />
         </div>
       </main>
+
+      {/* Overscrolling past the end fills a bar, then opens the next project. */}
+      <NextProjectPull title={nextProject.title} />
     </PageFade>
   );
 }
