@@ -8,7 +8,7 @@ export default function Header() {
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between w-full">
         <div className="flex items-center justify-between">
           <p className="flex items-center gap-2 text-xs">
-            <PageTransitionLink href="/" className="font-bold uppercase text-hover">
+            <PageTransitionLink href="/" className="font-bold uppercase">
               {data.header?.title}
             </PageTransitionLink>
             <span className="font-light text-text-light lowercase">
@@ -18,7 +18,7 @@ export default function Header() {
               <Link
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-hover hover:text-[#2a4cf9]!"
+                className="transition-colors duration-200 ease-out hover:text-[#2a4cf9]"
                 href={data.header?.workAt?.href}
               >
                 {data.header?.workAt?.label}

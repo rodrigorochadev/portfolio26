@@ -24,10 +24,38 @@ export type CursorType = {
    * pointer stays visible, and is only hidden once the custom one has actually rendered.
    */
   hideNative?: boolean;
+  /**
+   * Draws the cursor itself (e.g. WebGL), loaded the first time the type is shown. Until it's
+   * ready, or if it throws, the element keeps its plain CSS look.
+   */
+  renderer?: () => Promise<CursorRendererFactory>;
 };
 
+/** What a renderer gets each frame. */
+export type CursorFrame = {
+  /** Cursor center in viewport px. */
+  x: number;
+  y: number;
+  /** Frame time in ms. */
+  dt: number;
+  visible: boolean;
+  pressed: boolean;
+  reducedMotion: boolean;
+  /** The hovered target's `data-*` attributes (the last target's, while hiding). */
+  data: DOMStringMap;
+};
+
+export type CursorRenderer = {
+  /** Draw one frame; return true to be called again on the next one. */
+  frame: (state: CursorFrame) => boolean;
+  destroy: () => void;
+};
+
+/** Mounts a renderer into the cursor element. */
+export type CursorRendererFactory = (el: HTMLElement, type: CursorType) => CursorRenderer;
+
 export const CURSOR_TYPES: Record<string, CursorType> = {
-  /** Project cards: a "View" pill centered on the pointer. */
+  /** A "View" pill centered on the pointer. */
   view: {
     variant: "pill",
     size: 64,
@@ -35,6 +63,21 @@ export const CURSOR_TYPES: Record<string, CursorType> = {
     follow: 0.02,
     leaveDelay: 100,
     label: "View",
+  },
+  /**
+   * Project cards: the outline of a liquid drop with a gooey trail, around the label. It replaces
+   * the pointer, and lags in its trail rather than in position, so the click point stays under the
+   * drop's center.
+   */
+  liquid: {
+    variant: "liquid",
+    size: 240,
+    offset: { x: 0, y: 0 },
+    follow: Infinity,
+    leaveDelay: 100,
+    label: "View",
+    hideNative: true,
+    renderer: () => import("./renderers/liquid").then((m) => m.createLiquidRenderer),
   },
 };
 

@@ -1,5 +1,5 @@
 import { damp } from "../../utils/math";
-import { CURSOR_TYPES, CursorType } from "./cursorTypes";
+import { CURSOR_TYPES, CursorRenderer, CursorType } from "./cursorTypes";
 
 export type CursorController = {
   /**
@@ -42,7 +42,15 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
   let reducedMotion = motionQuery.matches;
 
   let target: Element | null = null;
+  let targetData: DOMStringMap = {};
+  /** The type being shown; null while hidden. */
   let type: CursorType | null = null;
+  /** The last type shown, which keeps drawing (and animating out) after `type` goes null. */
+  let shown: { name: string; type: CursorType } | null = null;
+  let renderer: CursorRenderer | null = null;
+  // Bumped whenever the renderer changes, so a stale lazy load is dropped.
+  let rendererToken = 0;
+  let pressed = false;
   // Pointer (goal) and drawn (current) positions, in viewport px.
   let px = 0;
   let py = 0;
@@ -57,33 +65,51 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
   let dismissed: Element | null = null;
 
   const draw = () => {
-    if (!type) return;
-    const half = type.size / 2;
+    if (!shown) return;
+    const { size, offset } = shown.type;
     // `translate`, not `transform`: CSS applies it after `scale`, so the show/press scale stays
     // centered on the cursor instead of scaling the offset from the viewport's corner too.
-    el.style.translate = `${x + type.offset.x - half}px ${y + type.offset.y - half}px`;
+    el.style.translate = `${x + offset.x - size / 2}px ${y + offset.y - size / 2}px`;
   };
 
   const tick = (now: number) => {
     frame = 0;
-    if (!type) return;
+    if (!shown) return;
     // rAF timestamps are frame start times, so they can trail `last` slightly.
     const dt = Math.min(Math.max(now - last, 0), 64);
     last = now;
 
-    if (reducedMotion || !Number.isFinite(type.follow)) {
-      x = px;
-      y = py;
-    } else {
-      x = damp(x, px, type.follow, dt);
-      y = damp(y, py, type.follow, dt);
-      if (Math.abs(px - x) < SETTLE && Math.abs(py - y) < SETTLE) {
+    // While hiding it stays put; only a renderer still has something to animate.
+    if (type) {
+      if (reducedMotion || !Number.isFinite(type.follow)) {
         x = px;
         y = py;
+      } else {
+        x = damp(x, px, type.follow, dt);
+        y = damp(y, py, type.follow, dt);
+        if (Math.abs(px - x) < SETTLE && Math.abs(py - y) < SETTLE) {
+          x = px;
+          y = py;
+        }
       }
+      draw();
     }
-    draw();
-    if (x !== px || y !== py) frame = requestAnimationFrame(tick);
+
+    let busy = !!type && (x !== px || y !== py);
+    if (renderer) {
+      const { offset } = shown.type;
+      const animating = renderer.frame({
+        x: x + offset.x,
+        y: y + offset.y,
+        dt,
+        visible: el.hasAttribute("data-visible"),
+        pressed,
+        reducedMotion,
+        data: targetData,
+      });
+      busy = animating || busy;
+    }
+    if (busy) frame = requestAnimationFrame(tick);
   };
 
   const schedule = () => {
@@ -101,17 +127,43 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
   const render = () => {
     const visible = !!type && !focusRingShowing();
     el.toggleAttribute("data-visible", visible);
-    // Only hide the system cursor once ours is actually showing.
-    html.toggleAttribute("data-cursor-hide-native", visible && !!type?.hideNative);
+    // Only hide the system cursor once ours is actually showing (and drawn, for a renderer).
+    const drawn = !type?.renderer || !!renderer;
+    html.toggleAttribute("data-cursor-hide-native", visible && drawn && !!type?.hideNative);
+    // A renderer animates the change itself.
+    if (renderer) schedule();
+  };
+
+  const mountRenderer = (next: CursorType) => {
+    const token = ++rendererToken;
+    renderer?.destroy();
+    renderer = null;
+    el.removeAttribute("data-ready");
+    if (!next.renderer) return;
+
+    next
+      .renderer()
+      .then((factory) => {
+        if (token !== rendererToken) return;
+        renderer = factory(el, next);
+        el.setAttribute("data-ready", "");
+        render();
+      })
+      // No WebGL, a failed chunk…: keep the CSS look.
+      .catch(() => {});
   };
 
   const setType = (name: string | null) => {
-    const next = name ? CURSOR_TYPES[name] : undefined;
-    type = next ?? null;
-    if (type) {
-      el.dataset.variant = type.variant;
-      el.style.setProperty("--cursor-size", `${type.size}px`);
-      el.textContent = target?.getAttribute("data-cursor-label") ?? type.label ?? "";
+    const next = (name && CURSOR_TYPES[name]) || null;
+    type = next;
+    if (name && next) {
+      if (shown?.name !== name) {
+        shown = { name, type: next };
+        el.dataset.variant = next.variant;
+        el.style.setProperty("--cursor-size", `${next.size}px`);
+        mountRenderer(next);
+      }
+      el.dataset.label = target?.getAttribute("data-cursor-label") ?? next.label ?? "";
       if (placed) draw();
     }
     render();
@@ -132,9 +184,14 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
     schedule();
   };
 
-  const onDown = () => el.setAttribute("data-pressed", "");
-  const onUp = () => el.removeAttribute("data-pressed");
-  // A plain click on a target navigates: fade out (CSS) rather than vanish under the new page.
+  const press = (down: boolean) => {
+    pressed = down;
+    el.toggleAttribute("data-pressed", down);
+    if (renderer) schedule();
+  };
+  const onDown = () => press(true);
+  const onUp = () => press(false);
+  // A plain click on a target navigates: fade out rather than vanish under the new page.
   // Modified clicks (new tab) keep it.
   const onClick = (event: MouseEvent) => {
     if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -170,6 +227,7 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
   const enter = (next: Element, event: PointerEvent) => {
     if (!target) listen(true);
     target = next;
+    targetData = next instanceof HTMLElement || next instanceof SVGElement ? next.dataset : {};
     px = event.clientX;
     py = event.clientY;
     // Appear at the pointer, not flying in from wherever it was last.
@@ -191,10 +249,9 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
     if (!target) return;
     target = null;
     listen(false);
-    cancelAnimationFrame(frame);
-    frame = 0;
     placed = false;
     onUp();
+    // The loop keeps running only while a renderer animates out.
     setType(null);
   }
 
@@ -224,6 +281,10 @@ export function initCursor({ root = document }: CursorOptions = {}): CursorContr
     destroy: () => {
       dismissed = null;
       leave();
+      cancelAnimationFrame(frame);
+      rendererToken++;
+      renderer?.destroy();
+      renderer = null;
       root.removeEventListener("pointerover", onOver as EventListener);
       motionQuery.removeEventListener("change", onMotionChange);
       html.removeAttribute("data-cursor-hide-native");

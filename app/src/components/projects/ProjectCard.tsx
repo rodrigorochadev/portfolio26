@@ -14,7 +14,7 @@ export default function ProjectCard({ project, priority }: ProjectCardProps) {
       <ProjectLink
         project={project}
         aria-label={`View ${project.title}`}
-        data-cursor="view"
+        data-cursor="liquid"
         data-cursor-label="View"
         className="relative block"
       >

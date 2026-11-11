@@ -31,7 +31,7 @@ export default function ProjectList({
       {seeAll && (
         <PageTransitionLink
           href={PROJECTS_PATH}
-          className="text-hover mt-6 flex items-center justify-between border-t border-text/10 pt-6 text-xs font-bold uppercase"
+          className="mt-6 flex items-center justify-between border-t border-text/10 pt-6 text-xs font-bold uppercase"
         >
           <span>{data.seeAllLabel}</span>
           <span>({getProjects().length}) →</span>

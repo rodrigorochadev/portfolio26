@@ -46,10 +46,6 @@ body {
   font-variation-settings: "wght" 100;
 }
 
-.text-hover {
-  @apply transition-colors duration-200 hover:text-accent ease-out;
-}
-
 /* Project grid: hovering a card turns the other cards black & white. Only on devices that really hover,
    so a tap on touch screens doesn't leave the rest stuck in grayscale. */
 .project-card-image {
@@ -71,50 +67,114 @@ body {
    per variant or per theme without touching the script. Black on white (or the reverse), 21:1. */
 .custom-cursor {
   --cursor-size: 64px;
+  /* The CSS dot; the box can be larger (a renderer's canvas), the dot stays this size. */
+  --cursor-dot: var(--cursor-size);
   --cursor-bg: var(--text);
   --cursor-fg: var(--background);
   --cursor-ring: color-mix(in srgb, var(--background) 40%, transparent);
   --cursor-font-size: 0.625rem;
   --cursor-scale-hidden: 0.4;
   --cursor-scale-pressed: 0.85;
-  --cursor-duration: 200ms;
+  /* Hiding is slow; showing and press / release are quicker. The liquid renderer's LEAVE / ENTER
+     match these. A transition takes the timing of the state it goes to. */
+  --cursor-leave-duration: 600ms;
+  --cursor-leave-easing: cubic-bezier(0.65, 0, 0.35, 1);
+  --cursor-enter-duration: 350ms;
+  --cursor-enter-easing: cubic-bezier(0.33, 1, 0.68, 1);
 
   position: fixed;
   top: 0;
   left: 0;
   width: var(--cursor-size);
   height: var(--cursor-size);
-  display: grid;
-  place-items: center;
   pointer-events: none;
   user-select: none;
-  border-radius: 9999px;
-  background: var(--cursor-bg);
-  color: var(--cursor-fg);
-  box-shadow: 0 0 0 1px var(--cursor-ring);
-  font-size: var(--cursor-font-size);
-  font-weight: 700;
-  text-transform: uppercase;
   opacity: 0;
   scale: var(--cursor-scale-hidden);
   will-change: translate;
   transition:
-    opacity var(--cursor-duration) ease-out,
-    scale var(--cursor-duration) ease-out;
+    opacity var(--cursor-leave-duration) var(--cursor-leave-easing),
+    scale var(--cursor-leave-duration) var(--cursor-leave-easing);
+}
+
+.custom-cursor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: var(--cursor-dot);
+  height: var(--cursor-dot);
+  border-radius: 9999px;
+  background: var(--cursor-bg);
+  box-shadow: 0 0 0 1px var(--cursor-ring);
+}
+
+/* The label, above a renderer's canvas. */
+.custom-cursor::after {
+  content: attr(data-label);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--cursor-fg);
+  font-size: var(--cursor-font-size);
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .custom-cursor[data-visible] {
   opacity: 1;
   scale: 1;
+  transition-duration: var(--cursor-enter-duration);
+  transition-timing-function: var(--cursor-enter-easing);
 }
 
 .custom-cursor[data-visible][data-pressed] {
   scale: var(--cursor-scale-pressed);
 }
 
+/* Liquid: a WebGL drop outline (renderers/liquid.ts). Until it's ready it's the plain dot above.
+   Once ready, the shader does the show/hide, so the box stays put and only the label animates.
+   White, with a shadow for light images, like the outline. */
+.custom-cursor[data-variant="liquid"] {
+  --cursor-dot: 64px;
+}
+
+.custom-cursor[data-variant="liquid"][data-ready] {
+  --cursor-fg: #ffffff;
+  opacity: 1;
+  scale: 1;
+  transition: none;
+}
+
+.custom-cursor[data-variant="liquid"][data-ready]::before {
+  display: none;
+}
+
+.custom-cursor[data-variant="liquid"][data-ready]::after {
+  opacity: 0;
+  scale: 0.6;
+  text-shadow: 0 0 6px rgb(0 0 0 / 0.5);
+  transition:
+    opacity var(--cursor-leave-duration) var(--cursor-leave-easing),
+    scale var(--cursor-leave-duration) var(--cursor-leave-easing);
+}
+
+.custom-cursor[data-variant="liquid"][data-ready][data-visible]::after {
+  opacity: 1;
+  scale: 1;
+  transition-duration: var(--cursor-enter-duration);
+  transition-timing-function: var(--cursor-enter-easing);
+}
+
+.custom-cursor[data-variant="liquid"][data-ready][data-visible][data-pressed]::after {
+  scale: 0.85;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .custom-cursor {
-    transition: none;
+  .custom-cursor,
+  .custom-cursor::after {
+    transition: none !important;
   }
 }
 

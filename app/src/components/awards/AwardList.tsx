@@ -21,7 +21,7 @@ export default function AwardList() {
           >
             <span className="font-bold md:col-span-5">
               {award.href ? (
-                <a href={award.href} target="_blank" rel="noopener noreferrer" className="text-hover">
+                <a href={award.href} target="_blank" rel="noopener noreferrer">
                   {award.title} ↗
                 </a>
               ) : (
@@ -34,7 +34,7 @@ export default function AwardList() {
             <span className="text-text-light md:col-span-3">{award.issuer}</span>
             <span className="text-right md:text-left md:col-span-3">
               {award.project && (
-                <PageTransitionLink href={projectPath(award.project.slug)} className="text-hover">
+                <PageTransitionLink href={projectPath(award.project.slug)}>
                   {award.project.title}
                 </PageTransitionLink>
               )}

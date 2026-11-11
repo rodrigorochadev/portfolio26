@@ -18,7 +18,7 @@ export default function ProjectsPage() {
         <PageTransitionLink
           href="/"
           restoreScroll
-          className="text-xs font-bold uppercase text-hover w-fit"
+          className="text-xs font-bold uppercase w-fit"
         >
           ← Back
         </PageTransitionLink>

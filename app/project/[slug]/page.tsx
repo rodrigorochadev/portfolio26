@@ -50,7 +50,7 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
           (opacity only, no transform), so it still fades with the page during transitions. */}
       <ProjectBackLink
         slug={slug}
-        className="fixed left-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 rounded-full border border-text/10 bg-background/60 px-4 py-2 text-xs font-bold uppercase backdrop-blur-md text-hover"
+        className="fixed left-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 rounded-full border border-text/10 bg-background/60 px-4 py-2 text-xs font-bold uppercase backdrop-blur-md"
       >
         ← Back
       </ProjectBackLink>

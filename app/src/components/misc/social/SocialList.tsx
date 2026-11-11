@@ -11,7 +11,7 @@ export default function SocialList() {
             key={`social-btn-${social.social}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-hover rounded-full p-1"
+            className="rounded-full p-1"
             href={social.href}
             aria-label={`Link to ${social.label}`}
           >
