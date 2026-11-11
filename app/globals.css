@@ -61,3 +61,80 @@ body {
     filter: grayscale(1);
   }
 }
+
+/* Same for keyboard focus, so focusing a card gives the feedback hovering does. */
+.project-grid:has(.project-card a:focus-visible) .project-card:not(:has(a:focus-visible)) .project-card-image {
+  filter: grayscale(1);
+}
+
+/* Custom cursor (app/src/components/cursor). Appearance lives in these properties; override them
+   per variant or per theme without touching the script. Black on white (or the reverse), 21:1. */
+.custom-cursor {
+  --cursor-size: 64px;
+  --cursor-bg: var(--text);
+  --cursor-fg: var(--background);
+  --cursor-ring: color-mix(in srgb, var(--background) 40%, transparent);
+  --cursor-font-size: 0.625rem;
+  --cursor-scale-hidden: 0.4;
+  --cursor-scale-pressed: 0.85;
+  --cursor-duration: 200ms;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  user-select: none;
+  border-radius: 9999px;
+  background: var(--cursor-bg);
+  color: var(--cursor-fg);
+  box-shadow: 0 0 0 1px var(--cursor-ring);
+  font-size: var(--cursor-font-size);
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 0;
+  scale: var(--cursor-scale-hidden);
+  will-change: translate;
+  transition:
+    opacity var(--cursor-duration) ease-out,
+    scale var(--cursor-duration) ease-out;
+}
+
+.custom-cursor[data-visible] {
+  opacity: 1;
+  scale: 1;
+}
+
+.custom-cursor[data-visible][data-pressed] {
+  scale: var(--cursor-scale-pressed);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    transition: none;
+  }
+}
+
+/* Only set while a `hideNative` type is actually showing. */
+[data-cursor-hide-native] [data-cursor] {
+  cursor: none;
+}
+
+/* Keyboard equivalent of the cursor: a focused target shows the same label as a static badge. */
+[data-cursor-label]:focus-visible::after {
+  content: attr(data-cursor-label);
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 9999px;
+  background: var(--text);
+  color: var(--background);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  pointer-events: none;
+}

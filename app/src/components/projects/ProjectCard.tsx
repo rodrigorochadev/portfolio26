@@ -11,7 +11,13 @@ type ProjectCardProps = {
 export default function ProjectCard({ project, priority }: ProjectCardProps) {
   return (
     <article id={project.slug} className="project-card flex flex-col gap-3 scroll-mt-16">
-      <ProjectLink project={project} aria-label={`View ${project.title}`} className="block">
+      <ProjectLink
+        project={project}
+        aria-label={`View ${project.title}`}
+        data-cursor="view"
+        data-cursor-label="View"
+        className="relative block"
+      >
         <ProjectImageTarget slug={project.slug} className="aspect-4/3">
           <Image
             src={project.image.src}

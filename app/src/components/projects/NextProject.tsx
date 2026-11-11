@@ -18,7 +18,7 @@ export default function NextProject({ project }: { project: Project }) {
       <span className="text-xs font-bold uppercase text-text-light md:col-span-3">Next project</span>
       <div className="md:col-span-9 flex items-end justify-between gap-6">
         <div className="flex flex-col gap-2">
-          <span className="font-heading text-4xl md:text-6xl tracking-tight uppercase transition-colors duration-200 ease-out group-hover:text-accent">
+          <span className="font-heading text-4xl md:text-6xl tracking-tight uppercase transition-colors duration-200 ease-out group-hover:text-accent group-focus-visible:text-accent">
             {project.title}
           </span>
           <span className="text-text-light max-w-lg">{project.description}</span>
@@ -32,6 +32,7 @@ export default function NextProject({ project }: { project: Project }) {
             alt={project.image.alt}
             fill
             sizes="224px"
+            data-cursor="view"
             className="object-cover"
           />
         </ProjectImageTarget>
