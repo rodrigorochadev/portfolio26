@@ -122,7 +122,7 @@ export default function NextProjectPull({ title }: { title: string }) {
       >
         Keep scrolling for {title}
       </motion.span>
-      <motion.div className="h-1 origin-left bg-accent" style={{ scaleX: progress }} />
+      <motion.div className="h-1 origin-left bg-text" style={{ scaleX: progress }} />
     </div>
   );
 }

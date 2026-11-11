@@ -10,6 +10,7 @@
       "title": "Aurora Commerce",
       "year": 2026,
       "role": "Lead Frontend Engineer",
+      "url": "https://example.com",
       "tags": [
         "Next.js",
         "Shopify",
@@ -148,6 +149,7 @@
       "title": "Pulse Analytics",
       "year": 2025,
       "role": "Software Engineer",
+      "url": "https://example.com",
       "tags": [
         "React",
         "WebGL",
@@ -292,6 +294,7 @@
       "title": "Lumen Studio",
       "year": 2025,
       "role": "Creative Developer",
+      "url": "https://example.com",
       "tags": [
         "Three.js",
         "GLSL",
@@ -412,6 +415,7 @@
       "title": "Terminal Notes",
       "year": 2024,
       "role": "Solo Developer",
+      "url": "https://example.com",
       "tags": [
         "TypeScript",
         "Electron",
@@ -558,6 +562,7 @@
       "title": "Relay",
       "year": 2024,
       "role": "Design Systems Engineer",
+      "url": "https://example.com",
       "tags": [
         "React",
         "Design Tokens",
@@ -683,6 +688,7 @@
       "title": "Harbor",
       "year": 2023,
       "role": "Creator & Maintainer",
+      "url": "https://example.com",
       "tags": [
         "Go",
         "Docker",

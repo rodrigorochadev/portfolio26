@@ -20,6 +20,9 @@ import ProjectTitle from "@/app/src/components/projects/ProjectTitle";
 // Only slugs listed in projects.json exist; anything else 404s (restart `next dev` after adding one).
 export const dynamicParams = false;
 
+const PILL_CLASS_NAME =
+  "rounded-full border border-text/10 bg-background/60 px-4 py-2 text-xs font-bold uppercase backdrop-blur-md";
+
 export function generateStaticParams() {
   return getProjects().map(({ slug }) => ({ slug }));
 }
@@ -49,12 +52,16 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
       <ProjectBackground theme={project.background} />
       {/* Fixed to the viewport, so it's reachable from anywhere on a long case study. Inside PageFade
           (opacity only, no transform), so it still fades with the page during transitions. */}
-      <ProjectBackLink
-        slug={slug}
-        className="fixed left-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 rounded-full border border-text/10 bg-background/60 px-4 py-2 text-xs font-bold uppercase backdrop-blur-md"
-      >
-        ← Back
-      </ProjectBackLink>
+      <nav className="fixed left-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 flex gap-2">
+        <ProjectBackLink slug={slug} className={PILL_CLASS_NAME}>
+          ← Back
+        </ProjectBackLink>
+        {project.url && (
+          <a href={project.url} target="_blank" rel="noopener noreferrer" className={PILL_CLASS_NAME}>
+            Visit ↗
+          </a>
+        )}
+      </nav>
 
       {/* Bottom padding keeps the last content clear of the fixed Back button. */}
       <main className="container w-full pt-28 md:pt-40 pb-28 flex flex-col gap-8">

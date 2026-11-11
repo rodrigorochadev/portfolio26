@@ -1,6 +1,7 @@
 import data from "@/app/data/awards.json";
 import { getAwards } from "../../lib/awards";
 import { projectPath } from "../../lib/projects";
+import StaggerReveal from "../misc/animation/StaggerReveal";
 import PageTransitionLink from "../projects/transition/PageTransitionLink";
 
 /** Awards as a table-like list: one row per award, linking to the awarded project's case study. */
@@ -13,7 +14,7 @@ export default function AwardList() {
         <h2>{data.title}</h2>
         <span>({awards.length})</span>
       </div>
-      <ul className="border-t border-text/10">
+      <StaggerReveal as="ul" className="border-t border-text/10">
         {awards.map((award) => (
           <li
             key={`${award.issuer}-${award.title}-${award.project?.slug}`}
@@ -41,7 +42,7 @@ export default function AwardList() {
             </span>
           </li>
         ))}
-      </ul>
+      </StaggerReveal>
     </section>
   );
 }

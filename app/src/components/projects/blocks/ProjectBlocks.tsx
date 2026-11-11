@@ -1,4 +1,5 @@
 import type { Project, ProjectBlock } from "@/app/src/lib/projects";
+import ProjectSections from "../ProjectSections";
 import CodeBlock from "./CodeBlock";
 import GalleryBlock from "./GalleryBlock";
 import ImageBlock from "./ImageBlock";
@@ -46,10 +47,10 @@ function renderBlock(block: ProjectBlock, project: Project) {
 /** Renders a project's page from its block sequence in projects.json. */
 export default function ProjectBlocks({ project }: { project: Project }) {
   return (
-    <div className="flex flex-col gap-20 md:gap-28">
+    <ProjectSections slug={project.slug} className="flex flex-col gap-20 md:gap-28">
       {project.blocks.map((block, index) => (
         <div key={`${block.type}-${index}`}>{renderBlock(block, project)}</div>
       ))}
-    </div>
+    </ProjectSections>
   );
 }

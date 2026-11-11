@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { useState } from "react";
 
 export type Rect = { top: number; left: number; width: number; height: number };
 
@@ -102,4 +103,14 @@ export function currentNavigationId() {
 
 export function toRect({ top, left, width, height }: DOMRect): Rect {
   return { top, left, width, height };
+}
+
+/**
+ * False while the page is the destination of the flight it mounted during, until the image has
+ * landed and the flying copy is gone; true otherwise. Lets entry animations wait for the flight.
+ */
+export function useArrivalSettled(slug: string) {
+  // Always null on the server and on a fresh load, so it never affects hydration.
+  const [arrivingFlight] = useState(() => currentFlightId(slug));
+  return useProjectTransition((s) => arrivingFlight === null || s.flight?.id !== arrivingFlight);
 }

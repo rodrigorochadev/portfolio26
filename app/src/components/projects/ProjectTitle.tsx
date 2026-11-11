@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import TitleAnimation from "../misc/titleAnimation/TitleAnimation";
-import { currentFlightId, useProjectTransition } from "./transition/projectTransition";
+import { useArrivalSettled } from "./transition/projectTransition";
 
 type ProjectTitleProps = {
   slug: string;
@@ -15,14 +14,9 @@ type ProjectTitleProps = {
  * until the image has landed and the flying copy is gone, so the two don't compete.
  */
 export default function ProjectTitle({ slug, title, className }: ProjectTitleProps) {
-  // The flight this page mounted during. Always null on the server and on a fresh load, so it
-  // never affects hydration.
-  const [arrivingFlight] = useState(() => currentFlightId(slug));
-  const ready = useProjectTransition(
-    (s) => arrivingFlight === null || s.flight?.id !== arrivingFlight,
-  );
+  const ready = useArrivalSettled(slug);
 
   return (
-    <TitleAnimation label={title} ready={ready} restWeight={400} className={className} />
+    <TitleAnimation label={title} ready={ready} className={className} />
   );
 }

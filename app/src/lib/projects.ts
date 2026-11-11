@@ -14,7 +14,11 @@ export type ProjectBlock =
   | { type: "palette"; colors: { name: string; hex: string }[]; image?: BlockImage; caption?: string }
   | { type: "quote"; quote: string; author: string; role: string };
 
-export type Project = Omit<(typeof data.projects)[number], "blocks"> & { blocks: ProjectBlock[] };
+export type Project = Omit<(typeof data.projects)[number], "blocks" | "url"> & {
+  blocks: ProjectBlock[];
+  /** The live site, linked from the project page; omit it for work that isn't public. */
+  url?: string;
+};
 
 // JSON imports widen `type` to string, so the block union can't be inferred; this is the one cast.
 const projects = data.projects as Project[];
