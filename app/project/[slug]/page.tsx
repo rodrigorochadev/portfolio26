@@ -15,6 +15,7 @@ import ProjectBlocks from "@/app/src/components/projects/blocks/ProjectBlocks";
 import NextProject from "@/app/src/components/projects/NextProject";
 import NextProjectPull from "@/app/src/components/projects/NextProjectPull";
 import ProjectHeroImage from "@/app/src/components/projects/ProjectHeroImage";
+import ProjectTitle from "@/app/src/components/projects/ProjectTitle";
 
 // Only slugs listed in projects.json exist; anything else 404s (restart `next dev` after adding one).
 export const dynamicParams = false;
@@ -59,9 +60,11 @@ export default async function ProjectPage(props: PageProps<"/project/[slug]">) {
       <main className="container w-full pt-28 md:pt-40 pb-28 flex flex-col gap-8">
         {/* Same position as when Back sat above it: its line (16px) + the gap (32px) added here. */}
         <header className="flex flex-col gap-4 mt-24 md:mt-32">
-          <h1 className="font-heading text-5xl md:text-7xl tracking-tight uppercase">
-            {project.title}
-          </h1>
+          <ProjectTitle
+            slug={slug}
+            title={project.title}
+            className="font-heading text-5xl md:text-7xl tracking-tight uppercase"
+          />
         </header>
 
         <ProjectHeroImage project={project} />
